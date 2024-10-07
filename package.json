@@ -1,5 +1,5 @@
 {
-  "name": "employee_directory",
+  "name": "employee-directory-v2",
   "main": "server.js",
   "type": "module",
   "scripts": {
