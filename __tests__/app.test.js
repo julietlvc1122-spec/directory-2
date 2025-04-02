@@ -8,6 +8,7 @@ describe("Express app", () => {
   it("is defined", () => {
     expect(app).toBeDefined();
   });
+
   it("responds to requests", async () => {
     const response = await request(app).get("/");
     expect(response).toBeDefined();
@@ -32,6 +33,7 @@ describe("GET /employees/:id", () => {
     const expected = employees.find((employee) => employee.id === 1);
     expect(response.body).toEqual(expected);
   });
+
   it("sends 404 for non-existent employee", async () => {
     const response = await request(app).get("/employees/999");
     expect(response.status).toBe(404);
@@ -59,5 +61,33 @@ describe("GET /employees/random", () => {
       `;
       throw e;
     }
+  });
+});
+
+describe("POST /employees", () => {
+  it("sends 400 if name is not provided", async (req, res) => {
+    const response = await request(app).post("/employees");
+    expect(response.status).toBe(400);
+  });
+
+  it("sends 400 if an empty name is provided", async (req, res) => {
+    const response = await request(app).post("/employees").send({ name: "" });
+    expect(response.status).toBe(400);
+  });
+
+  it("sends new employee with status 201 if name is provided", async (req, res) => {
+    const name = "Amazing Employee";
+    const response = await request(app).post("/employees").send({ name });
+    expect(response.status).toBe(201);
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
+    expect(response.body.name).toBe(name);
+  });
+
+  it("creates an employee with a unique ID", async (req, res) => {
+    await request(app).post("/employees").send({ name: "foo" });
+    const ids = new Set();
+    employees.forEach((e) => ids.add(e.id));
+    expect(employees.length).toBe(ids.size);
   });
 });
