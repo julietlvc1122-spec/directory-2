@@ -11,7 +11,7 @@ Refactor this code to meet the following requirements:
 - A catch-all error-handling middleware sends status 500 for uncaught errors.
 - All `/employees` routes are organized into a separate router.
 - `POST /employees` adds a new employee with the provided `name` from the request body
-  - Send 400 if name is not correctly provided
+  - Send 400 if request body or name is not correctly provided
   - Send 201 with the new employee if name is correctly provided
   - The new employee's ID should be unique (using the array index is fine!)
 

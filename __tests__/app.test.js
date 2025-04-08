@@ -65,8 +65,13 @@ describe("GET /employees/random", () => {
 });
 
 describe("POST /employees", () => {
-  it("sends 400 if name is not provided", async (req, res) => {
+  it("sends 400 if request body is not provided", async (req, res) => {
     const response = await request(app).post("/employees");
+    expect(response.status).toBe(400);
+  });
+
+  it("sends 400 if name is not provided", async (req, res) => {
+    const response = await request(app).post("/employees").send({});
     expect(response.status).toBe(400);
   });
 
