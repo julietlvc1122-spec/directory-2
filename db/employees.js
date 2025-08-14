@@ -11,6 +11,7 @@ const employees = [
   { id: 10, name: "Gwen Grollmann" },
 ];
 
+/* WARNING: this must remain the default export in order for the tests to work! */
 export default employees;
 
 export function getEmployees() {
