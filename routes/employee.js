@@ -28,6 +28,7 @@ router.get("/", (req, res) => {
   const employees = getEmployees();
   res.send(employees);
 });
+
 router.get("/random", (req, res) => {
   const employee = getRandomEmployee();
   res.send(employee);
